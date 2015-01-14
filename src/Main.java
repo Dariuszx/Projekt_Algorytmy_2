@@ -9,14 +9,18 @@ public class Main {
         try {
 
             //Przykład kompresji danych Bzipem, zapisuje wynik do pliku o nazwie 'bzipData'
-            Bzip2.compress("Piotr Padalec", "bzipData" );
 
-            System.out.println( "\nPo dekompresji z użyciem Bzip2:");
+            String suroweDane = Loading.read("data").toString();
+
+
+            Bzip2.compress(suroweDane, "bzipData" );
+
+            System.out.println("\nPo dekompresji z użyciem Bzip2:");
             //Tutaj dekompresuje dane z pliku 'bzipData' i wyświetlam w terminalu
             System.out.println(Bzip2.decompress("bzipData"));
 
             //Teraz kompresuje dane algorytmem LZW, nie działa z polskimi znakami
-            List<Integer> wynikKompresji = Lzw.compress( "Jakies dane, duuuzo danych");
+            List<Integer> wynikKompresji = Lzw.compress( suroweDane );
 
             System.out.println( "\nPo kompresji z użyciem LZW:");
             System.out.println(wynikKompresji);
