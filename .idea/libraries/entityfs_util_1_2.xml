@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="entityfs-util-1.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/entityfs/entityfs-util-1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

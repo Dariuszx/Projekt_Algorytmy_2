@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="at4j-full-1.1.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/at4j/at4j-full-1.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
