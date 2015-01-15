@@ -17,7 +17,7 @@ public class Bzip2 {
      */
     public static void compress(String inputData, String fileName) throws FileNotFoundException, IOException {
 
-        OutputStream os = new FileOutputStream(new File(fileName));
+        OutputStream os = new FileOutputStream(new File(fileName+".compressed"));
         try {
             OutputStream bzos = new BZip2OutputStream(os);
             try {

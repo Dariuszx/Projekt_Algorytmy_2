@@ -1,40 +1,57 @@
 import java.io.*;
 import java.util.List;
 
+
 public class Main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        try {
+        List<Integer> compressedDataFilenames = Lzw.compress( Loading.read("data").toString() );
 
-            //Przykład kompresji danych Bzipem, zapisuje wynik do pliku o nazwie 'bzipData'
-
-            String suroweDane = Loading.read("data").toString();
+        String help = "Wyszukiwarka logów systemowych:" + "poprawne wywołanie programu powinno wyglądać następująco - " + "-[typ kompresji] [nazwa skompresowanego pliku] [wzorzec do wyszukania]\n";
 
 
-            Bzip2.compress(suroweDane, "bzipData" );
+        String compressedDataFilename = null;
 
-            System.out.println("\nPo dekompresji z użyciem Bzip2:");
-            //Tutaj dekompresuje dane z pliku 'bzipData' i wyświetlam w terminalu
-            System.out.println(Bzip2.decompress("bzipData"));
+        if (args.length < 3) {
 
-            //Teraz kompresuje dane algorytmem LZW, nie działa z polskimi znakami
-            List<Integer> wynikKompresji = Lzw.compress( suroweDane );
+            System.err.println(help);
 
-            System.out.println( "\nPo kompresji z użyciem LZW:");
-            System.out.println(wynikKompresji);
+        } else {
+
+            String alghoritm = "";
 
 
-            System.out.println( "\nPo dekompresji z użyciem LZW:");
+            if ( args[0].equals("-bzip2") && args[1].length() > 0 ) {
+                    alghoritm = "bzip2";
+                    compressedDataFilename = args[1];
+            } else if (args[0].equals("-lzw") && args[1].length() > 0 ) {
+                    alghoritm = "lzw";
+                    compressedDataFilename = args[1];
+            } else {
+                System.err.println("Nieoczekiwany błąd\n" + help);
+                System.exit(1);
+            }
 
-            //Teraz dekompresuje dane, które znajdują się w strukturze 'List'
-            System.out.println( Lzw.decompress( wynikKompresji ) );
+            if( args[2].length() == 0 ) System.exit(1);
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            String decompressed = null;
+
+            if( alghoritm == "bzip2" ) {
+                //Bzip2.compress(Loading.read("data").toString(), "data");
+                decompressed = Bzip2.decompress(compressedDataFilename);
+            } else {
+                decompressed = Lzw.decompress( compressedDataFilenames );
+            }
+
+            String pattern = args[2];
+
+            byte[] decompressedData = decompressed.getBytes();
+
+            Grep.initGrep(decompressedData, pattern);
+
         }
-
     }
 }
